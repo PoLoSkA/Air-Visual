@@ -1,7 +1,7 @@
-package ru.poloska.airvisual.data.models
+package ru.poloska.airvisual.data.models.api
 import com.google.gson.annotations.SerializedName
 
-data class Location(
+data class LocationApiModel(
     @SerializedName("coordinates")
     val coordinates: List<Double>,
     @SerializedName("type")

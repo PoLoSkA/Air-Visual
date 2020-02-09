@@ -1,6 +1,5 @@
 package ru.poloska.airvisual.data.network
 
-import ru.poloska.airvisual.data.models.SpecifiedCityData
 import io.reactivex.Single
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -11,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.GET
 import ru.poloska.airvisual.BuildConfig
-import ru.poloska.airvisual.data.models.*
+import ru.poloska.airvisual.data.models.api.*
 import java.util.concurrent.TimeUnit
 
 class NetworkEngine private constructor() {
@@ -63,35 +62,35 @@ interface AirVisualAPI{
     @GET("countries")
     fun getCountryList(
         @Field("key") apiKey: String
-    ) : Single<CountriesList>
+    ) : Single<CountriesListApiModel>
 
     @GET("states")
     fun getStatesList(
-        @Field("counry") country: Country,
+        @Field("counry") countryApiModel: CountryApiModel,
         @Field("key") apiKey: String
-    ) : Single<StatesList>
+    ) : Single<StatesListApiModel>
 
     @GET("cities")
     fun getCitiesList(
-        @Field("state") state: State,
-        @Field("country") country: Country,
+        @Field("state") stateApiModel: StateApiModel,
+        @Field("country") countryApiModel: CountryApiModel,
         @Field("key") apiKey: String
-    ) : Single<CitiesList>
+    ) : Single<CitiesListApiModel>
 
     @GET("city")
     fun getSpecifiedCityData(
-        @Field("city") city: City,
-        @Field("state") state: State,
-        @Field("country") country: Country,
+        @Field("city") cityApiModel: CityApiModel,
+        @Field("state") stateApiModel: StateApiModel,
+        @Field("country") countryApiModel: CountryApiModel,
         @Field("key") apiKey: String
-    ): Single<SpecifiedCityData>
+    ): Single<SpecifiedCityDataApiModel>
 
     @GET("nearest_city")
     fun getDataByGps(
         @Field("lat") state: Double,
         @Field("lon") country: Double,
         @Field("key") apiKey: String
-    ) : Single<SpecifiedCityData>
+    ) : Single<SpecifiedCityDataApiModel>
 
 
 }
