@@ -1,6 +1,5 @@
-package ru.poloska.airvisual.data.models.api
+package ru.poloska.airvisual.data.models.api_model
 import com.google.gson.annotations.SerializedName
-import ru.poloska.airvisual.data.models.api.CityDataApiModel
 
 data class SpecifiedCityDataApiModel(
     @SerializedName("data")

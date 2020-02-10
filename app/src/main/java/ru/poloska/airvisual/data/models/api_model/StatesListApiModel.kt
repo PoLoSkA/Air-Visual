@@ -1,10 +1,11 @@
-package ru.poloska.airvisual.data.models.api
+package ru.poloska.airvisual.data.models.api_model
+
 
 import com.google.gson.annotations.SerializedName
 
-data class CountriesListApiModel(
+data class StatesListApiModel(
     @SerializedName("data")
-    val countriesList: List<CountryApiModel>,
+    val statesList: List<StateApiModel>,
     @SerializedName("status")
     val status: String
 )
