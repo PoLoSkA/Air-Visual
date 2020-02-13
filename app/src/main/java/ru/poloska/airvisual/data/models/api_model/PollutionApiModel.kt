@@ -1,7 +1,7 @@
-package ru.poloska.airvisual.data.models
+package ru.poloska.airvisual.data.models.api_model
 import com.google.gson.annotations.SerializedName
 
-data class Pollution(
+data class PollutionApiModel(
     @SerializedName("aqicn")
     val aqiValueChinese: Int,
     @SerializedName("aqius")
