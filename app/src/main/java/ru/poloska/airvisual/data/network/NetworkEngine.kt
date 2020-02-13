@@ -46,7 +46,7 @@ class NetworkEngine private constructor() {
 
     private val apiAirVisual = getRetrofit(BASE_URL).create(AirVisualAPI::class.java)
 
-    private fun getApi() : AirVisualAPI{
+    private fun getApi(): AirVisualAPI {
         return apiAirVisual
     }
 

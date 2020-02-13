@@ -1,9 +1,12 @@
 package ru.poloska.airvisual.data.network
 
 import io.reactivex.Single
-import retrofit2.http.Field
 import retrofit2.http.GET
-import ru.poloska.airvisual.data.models.api_model.*
+import retrofit2.http.Query
+import ru.poloska.airvisual.data.models.api_model.CitiesListApiModel
+import ru.poloska.airvisual.data.models.api_model.CountriesListApiModel
+import ru.poloska.airvisual.data.models.api_model.SpecifiedCityDataApiModel
+import ru.poloska.airvisual.data.models.api_model.StatesListApiModel
 
 /**
  * User: yakimov
@@ -11,38 +14,37 @@ import ru.poloska.airvisual.data.models.api_model.*
  * Time: 15:16
  */
 
-interface AirVisualAPI{
-
+interface AirVisualAPI {
     @GET("states")
     fun getStatesList(
-        @Field("counry") country: String,
-        @Field("key") apiKey: String
-    ) : Single<StatesListApiModel>
+        @Query("counry") country: String,
+        @Query("key") apiKey: String
+    ): Single<StatesListApiModel>
 
     @GET("countries")
     fun getCountriesList(
-        @Field("key") apiKey: String
-    ) : Single<CountriesListApiModel>
+        @Query("key") apiKey: String
+    ): Single<CountriesListApiModel>
 
     @GET("cities")
     fun getCitiesList(
-        @Field("state") state: String,
-        @Field("country") country: String,
-        @Field("key") apiKey: String
-    ) : Single<CitiesListApiModel>
+        @Query("state") state: String,
+        @Query("country") country: String,
+        @Query("key") apiKey: String
+    ): Single<CitiesListApiModel>
 
     @GET("city")
     fun getSpecifiedCityData(
-        @Field("city") city: String,
-        @Field("state") state: String,
-        @Field("country") country: String,
-        @Field("key") apiKey: String
+        @Query("city") city: String,
+        @Query("state") state: String,
+        @Query("country") country: String,
+        @Query("key") apiKey: String
     ): Single<SpecifiedCityDataApiModel>
 
     @GET("nearest_city")
     fun getDataByGps(
-        @Field("lat") lat: Double,
-        @Field("lon") lon: Double,
-        @Field("key") apiKey: String
-    ) : Single<SpecifiedCityDataApiModel>
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("key") apiKey: String
+    ): Single<SpecifiedCityDataApiModel>
 }

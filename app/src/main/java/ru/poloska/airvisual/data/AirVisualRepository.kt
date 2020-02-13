@@ -14,7 +14,7 @@ import ru.poloska.airvisual.data.network.NetworkEngine
  * Time: 16:12
  */
 
-class AirVizualRepository {
+class AirVisualRepository {
     private val api = NetworkEngine.getInstance()
     private val API_KEY = "6c483487-b2ce-4688-9b47-3e4772b9760b"
 
@@ -36,9 +36,7 @@ class AirVizualRepository {
             ConvertToAppModel.cityData(it.cityDataModel)
         }
 
-    fun getDataByGps(lat: Double, lon: Double): Single<CityData> = api.getDataByGps(lat, lon, API_KEY).doOnError {
-
-    }.map {
+    fun getDataByGps(lat: Double, lon: Double): Single<CityData> = api.getDataByGps(lat, lon, API_KEY).map {
         ConvertToAppModel.cityData(it.cityDataModel)
     }
 }
