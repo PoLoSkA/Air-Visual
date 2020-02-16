@@ -1,6 +1,8 @@
 package ru.poloska.airvisual
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,8 @@ import ru.poloska.airvisual.view_model.CountriesViewModel
 
 class CountriesFragment : Fragment() {
 
+    private val LOG_TAG = CountriesFragment::class.java.simpleName
+
     private lateinit var recyclerAdapter: CountriesAdapter
     private val viewModel = CountriesViewModel()
 
@@ -26,10 +30,11 @@ class CountriesFragment : Fragment() {
         return inflater.inflate(R.layout.countries_fg, container, false)
     }
 
+    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerAdapter = CountriesAdapter(context!!)
+        recyclerAdapter = CountriesAdapter()
 
         activity?.findViewById<RecyclerView>(R.id.countries_rc)?.apply {
             addItemDecoration(RecyclerItemDecorator(8, 8, 8, 8))
@@ -42,7 +47,7 @@ class CountriesFragment : Fragment() {
         }
 
         viewModel.getCountriesList().observeOn(AndroidSchedulers.mainThread()).subscribe({
-            recyclerAdapter.replaceItems(it.countriesList)
+            recyclerAdapter.replaceAllItems(it.countriesList)
         }, {
 
         })
