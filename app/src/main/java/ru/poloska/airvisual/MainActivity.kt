@@ -2,8 +2,7 @@ package ru.poloska.airvisual
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import ru.poloska.airvisual.data.AirVisualRepository
+import ru.poloska.airvisual.navgation.Router
 
 
 class MainActivity : AppCompatActivity() {
@@ -14,10 +13,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        button.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.base_activity,
-                CountriesFragment()
-            ).commit()
-        }
+        initRouter()
+
+        Router.navigateTo(CountriesFragment(), "CountriesFragment")
+    }
+
+    private fun initRouter() {
+        Router.setFragmentFrame(R.id.fragment_frame)
+        Router.initFragmentManager(this)
     }
 }

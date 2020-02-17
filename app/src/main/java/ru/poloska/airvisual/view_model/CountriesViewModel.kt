@@ -10,10 +10,13 @@ import ru.poloska.airvisual.data.models.app_model.CountriesList
  * Date: 2020-02-13
  * Time: 15:39
  */
-class CountriesViewModel {
+class CountriesViewModel: BaseViewModel() {
     private val repo = AirVisualRepository()
 
     fun getCountriesList(): Single<CountriesList>{
-        return repo.getCountriesList().subscribeOn(Schedulers.io())
+        showProgress(true)
+        return repo.getCountriesList().subscribeOn(Schedulers.io()).doOnSuccess {
+            showProgress(false)
+        }
     }
 }
