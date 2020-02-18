@@ -2,7 +2,6 @@ package ru.poloska.airvisual
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.android.synthetic.main.countries_fg.*
 import ru.poloska.airvisual.adapters.CountriesAdapter
 import ru.poloska.airvisual.adapters.RecyclerItemDecorator
 import ru.poloska.airvisual.adapters.setOnItemClickListener
@@ -37,7 +37,7 @@ class CountriesFragment : Fragment() {
         recyclerAdapter = CountriesAdapter()
 
         activity?.findViewById<RecyclerView>(R.id.countries_rc)?.apply {
-            addItemDecoration(RecyclerItemDecorator(8, 8, 8, 8))
+            addItemDecoration(RecyclerItemDecorator(4,4,4,4))
             layoutManager = LinearLayoutManager(activity)
             adapter = recyclerAdapter
             setOnItemClickListener {
@@ -49,8 +49,15 @@ class CountriesFragment : Fragment() {
         viewModel.getCountriesList().observeOn(AndroidSchedulers.mainThread()).subscribe({
             recyclerAdapter.replaceAllItems(it.countriesList)
         }, {
-
         })
+
+        viewModel.progressObserver.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            showProgress(it)
+        }
+    }
+
+    private fun showProgress(flag: Boolean) {
+        progress.visibility = if (flag) View.VISIBLE else View.GONE
     }
 }
 
