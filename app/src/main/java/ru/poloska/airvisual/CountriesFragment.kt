@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.countries_fg.*
 import ru.poloska.airvisual.adapters.CountriesAdapter
 import ru.poloska.airvisual.adapters.RecyclerItemDecorator
 import ru.poloska.airvisual.adapters.setOnItemClickListener
+import ru.poloska.airvisual.navgation.Router
 import ru.poloska.airvisual.view_model.CountriesViewModel
 
 class CountriesFragment : Fragment() {
@@ -37,19 +38,15 @@ class CountriesFragment : Fragment() {
         recyclerAdapter = CountriesAdapter()
 
         activity?.findViewById<RecyclerView>(R.id.countries_rc)?.apply {
-            addItemDecoration(RecyclerItemDecorator(4,4,4,4))
+            addItemDecoration(RecyclerItemDecorator(4, 4, 4, 4))
             layoutManager = LinearLayoutManager(activity)
             adapter = recyclerAdapter
             setOnItemClickListener {
-                val item = recyclerAdapter.getItem(it)
-                Toast.makeText(context, item, Toast.LENGTH_LONG).show()
+                Router.goToStatesFragment(recyclerAdapter.getItem(it))
             }
         }
 
-        viewModel.getCountriesList().observeOn(AndroidSchedulers.mainThread()).subscribe({
-            recyclerAdapter.replaceAllItems(it.countriesList)
-        }, {
-        })
+        subscribeResources()
 
         viewModel.progressObserver.observeOn(AndroidSchedulers.mainThread()).subscribe {
             showProgress(it)
@@ -58,6 +55,30 @@ class CountriesFragment : Fragment() {
 
     private fun showProgress(flag: Boolean) {
         progress.visibility = if (flag) View.VISIBLE else View.GONE
+    }
+
+    @SuppressLint("CheckResult")
+    private fun subscribeResources() {
+        viewModel.getCountriesList()
+            .observeOn(AndroidSchedulers.mainThread())
+            .retryWhen {
+               it.flatMap {
+                   showDialog()
+                   viewModel.retrySubject }
+            }
+            .subscribe({
+                recyclerAdapter.replaceAllItems(it)
+            }, {
+
+            })
+    }
+
+   private fun showDialog() {
+        AlertDialog.Builder(context!!)
+            .setMessage("Something Wrong")
+            .setPositiveButton("Retry") { _, _ ->
+                viewModel.startRetry()
+            }.create().show()
     }
 }
 

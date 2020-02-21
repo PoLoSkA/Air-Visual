@@ -57,7 +57,7 @@ abstract class AbstractRecyclerAdapter<T, U : RecyclerView.ViewHolder> :
 
     fun addAllItems(itemsList: List<T>) {
         rcItemsList.addAll(itemsList)
-        notifyItemRangeChanged(rcItemsList.lastIndex, itemsList.lastIndex)
+        notifyItemRangeChanged(rcItemsList.lastIndex, itemsList.size)
     }
 
     fun addItemToEnd(item: T) {

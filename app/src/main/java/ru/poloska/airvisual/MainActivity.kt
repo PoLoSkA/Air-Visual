@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         initRouter()
 
-        Router.navigateTo(CountriesFragment(), "CountriesFragment")
+        Router.goToCountriesFragment()
     }
 
     private fun initRouter() {

@@ -1,5 +1,6 @@
 package ru.poloska.airvisual.data.network
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -17,14 +18,14 @@ import ru.poloska.airvisual.data.models.api_model.StatesListApiModel
 interface AirVisualAPI {
     @GET("states")
     fun getStatesList(
-        @Query("counry") country: String,
+        @Query("country") country: String,
         @Query("key") apiKey: String
     ): Single<StatesListApiModel>
 
     @GET("countries")
     fun getCountriesList(
         @Query("key") apiKey: String
-    ): Single<CountriesListApiModel>
+    ): Observable<CountriesListApiModel>
 
     @GET("cities")
     fun getCitiesList(
